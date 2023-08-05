@@ -1,54 +1,46 @@
 #include<stdio.h>
-int main()
-{
-    int pn[10];
+int main(){
+    /*
+    Enter the number of processes:3
+    Enter the Arrival Time & Burst Time: 2 3
+    Enter the Arrival Time & Burst Time: 5 6 
+    Enter the Arrival Time & Burst Time: 6 7
+
+    P Name  Arr time        Burs time       Start   TAT     Finish
+    P0      2               3               2               3               5
+    P1      5               6               5               6               11
+    P2      6               7               11              12              18
+
+    Average Waiting time:1.666667
+    Average turn around time:7.000000
+    */
     int arr[10],bur[10],star[10],finish[10],tat[10],wt[10],i,n;
     int totwt=0,tottat=0;
-    printf("Enter the number of processes :\n");
+    printf("Enter the number of processes:");
     scanf("%d",&n);
-    for(i=0;i<n;i++)
-    {
-        printf("Enter the process name , arrival time and burst time : ");
-        scanf("%d%d%d",&pn[i],&arr[i],&bur[i]);
+    for(i=0;i<n;i++) {
+        printf("Enter the Arrival Time & Burst Time: ");
+        scanf("%d%d",&arr[i],&bur[i]);
     }
-     for(i=0;i<n;i++)
-     {
-        if(i==0)
-        {
+    for(i=0;i<n;i++) {
+        if(i==0) {
             star[i]=arr[i];
             wt[i]=star[i]-arr[i];
             finish[i]=star[i]+bur[i];
-            tat[i]=finish[i]-arr[i];     
-       }
-       else{
+            tat[i]=finish[i]-arr[i];
+        } else {
             star[i]=finish[i-1];
             wt[i]=star[i]-arr[i];
             finish[i]=star[i]+bur[i];
             tat[i]=finish[i]-arr[i];
-       }
-     }
-     printf("\nPName\t Arrtime\t Burtime\t start\t TAT\t finish");
-     for(i=0;i<n;i++)
-      {
-        printf("\n%d\t/t%6d\t/t%6d\t%6d\t%6d\t%6d",pn[i],arr[i],bur[i],star[i],tat[i],finish[i]);
+        }
+    }
+    printf("\nP Name\tArr time\tBurs time\tStart\tTAT\tFinish\n");
+    for(i=0;i<n;i++) {
+        printf("P%d\t%d\t\t%d\t\t%d\t\t%d\t\t%d\n",i,arr[i],bur[i],star[i],tat[i],finish[i]);
         totwt+=wt[i];
         tottat+=tat[i];
-      }
-      printf("\nAverage waiting time : %f",(float)totwt/n);
-      printf("\nAverage turn around time : %f", (float)tottat/n);
+    }
+    printf("\nAverage Waiting time: %f\n",(float)totwt/n);
+    printf("Average turn around time: %f\n",(float)tottat/n);
 }
-
-/*Enter the number of processes :
-4
-Enter the process name , arrival time and burst time : 1 0 5
-Enter the process name , arrival time and burst time : 2 1 3
-Enter the process name , arrival time and burst time : 3 2 4
-Enter the process name , arrival time and burst time : 4 4 1
-
-PName    Arrtime         Burtime         start   TAT     finish
-1            0       5       0       5       5
-2            1       3       5       7       8
-3            2       4       8      10      12
-4            4       1      12       9      13
-Average waiting time : 4.500000
-Average turn around time : 7.750000*/
